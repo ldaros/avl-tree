@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "avl-tree"
+name = "avl"
 version = "0.1.0"
