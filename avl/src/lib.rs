@@ -138,7 +138,7 @@ mod tests {
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct Tree<T: Ord> {
-    root: Option<Box<Node<T>>>,
+    pub root: Option<Box<Node<T>>>,
 }
 
 impl<T: Ord + Clone> Tree<T> {
@@ -374,11 +374,11 @@ fn height<T: Ord>(node: &Option<Box<Node<T>>>) -> i32 {
 }
 
 #[derive(Debug, PartialEq, Clone)]
-struct Node<T: Ord> {
-    key: T,
+pub struct Node<T: Ord> {
+    pub key: T,
     height: i32,
-    left: Option<Box<Node<T>>>,
-    right: Option<Box<Node<T>>>,
+    pub left: Option<Box<Node<T>>>,
+    pub right: Option<Box<Node<T>>>,
 }
 
 impl<T: Ord> Node<T> {
