@@ -1,3 +1,4 @@
+use core::fmt;
 use std::cmp::{max, Ordering};
 
 #[cfg(test)]
@@ -121,6 +122,18 @@ mod tests {
 
         assert_eq!(vec![3, 2, 1, 6, 5], tree.pre_order());
     }
+
+    /// Should return the tree in bracket notation.
+    #[test]
+    fn test_bracket_notation() {
+        let mut tree: Tree<i32> = Tree::new();
+        tree.insert(1);
+        tree.insert(2);
+        tree.insert(3);
+        tree.insert(4);
+
+        assert_eq!(tree.to_string(), "2(1(()())3(()4(()())))");
+    }
 }
 
 #[derive(Debug, PartialEq, Clone)]
@@ -173,6 +186,12 @@ impl<T: Ord + Clone> Tree<T> {
         let mut result = Vec::new();
         post_order_recursive(&self.root, &mut result);
         result
+    }
+}
+
+impl<T: Ord + Clone + fmt::Display> fmt::Display for Tree<T> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", tree_to_string_recursive(&self.root))
     }
 }
 
@@ -370,5 +389,18 @@ impl<T: Ord> Node<T> {
             left: None,
             right: None,
         }
+    }
+}
+
+fn tree_to_string_recursive<T: Ord + Clone + fmt::Display>(node: &Option<Box<Node<T>>>) -> String {
+    if let Some(ref n) = *node {
+        format!(
+            "{}({}{})",
+            n.key,
+            tree_to_string_recursive(&n.left),
+            tree_to_string_recursive(&n.right)
+        )
+    } else {
+        String::from("()")
     }
 }
