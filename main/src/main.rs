@@ -167,7 +167,11 @@ fn key_pressed(_app: &App, model: &mut Model, key: Key) {
             }
             model.user_value.clear();
         }
-
+        Key::Minus => {
+            if model.user_value.is_empty() {
+                model.user_value.push('-');
+            }
+        }
         Key::Delete => {
             if let Ok(value) = model.user_value.parse::<i32>() {
                 model.tree.remove(value);
