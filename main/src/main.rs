@@ -167,6 +167,14 @@ fn key_pressed(_app: &App, model: &mut Model, key: Key) {
             }
             model.user_value.clear();
         }
+
+        Key::Delete => {
+            if let Ok(value) = model.user_value.parse::<i32>() {
+                model.tree.remove(value);
+            }
+            model.user_value.clear();
+        }
+
         _other_key => {}
     }
 }
