@@ -13,6 +13,8 @@ struct Model {
 }
 
 fn model(_app: &App) -> Model {
+    _app.main_window().set_title("AVL Tree");
+
     Model {
         user_value: String::new(),
         tree: Tree::new(),
@@ -30,9 +32,37 @@ fn update(_app: &App, _model: &mut Model, _update: Update) {
         Some(Key::Back) => {
             _model.user_value.pop();
         }
+        Some(Key::Key0) => {
+            _model.user_value.push('0');
+        }
         Some(Key::Key1) => {
             _model.user_value.push('1');
         }
+        Some(Key::Key2) => {
+            _model.user_value.push('2');
+        }
+        Some(Key::Key3) => {
+            _model.user_value.push('3');
+        }
+        Some(Key::Key4) => {
+            _model.user_value.push('4');
+        }
+        Some(Key::Key5) => {
+            _model.user_value.push('5');
+        }
+        Some(Key::Key6) => {
+            _model.user_value.push('6');
+        }
+        Some(Key::Key7) => {
+            _model.user_value.push('7');
+        }
+        Some(Key::Key8) => {
+            _model.user_value.push('8');
+        }
+        Some(Key::Key9) => {
+            _model.user_value.push('9');
+        }
+
         _ => {}
     }
 }

@@ -273,7 +273,7 @@ fn insert_recursively<T: Ord + Clone>(
         None => Some(Box::new(Node::new(value))),
 
         Some(mut node) => match value.cmp(&node.key) {
-            Ordering::Less | Ordering::Equal => {
+            Ordering::Less => {
                 node.left = insert_recursively(node.left, value.clone());
 
                 if should_balance(&node.left, &node.right) {
@@ -302,6 +302,8 @@ fn insert_recursively<T: Ord + Clone>(
                 update_height(&mut node);
                 Some(node)
             }
+
+            Ordering::Equal => Some(node),
         },
     }
 }
