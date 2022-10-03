@@ -4,68 +4,35 @@ use nannou::prelude::*;
 const RADIUS: f32 = 30.0;
 
 fn main() {
-    nannou::app(model).update(update).simple_window(view).run();
+    nannou::app(model)
+        .update(update)
+        .loop_mode(LoopMode::wait())
+        .run();
 }
 
 struct Model {
-    user_value: String,
+    _window: WindowId,
     tree: Tree<i32>,
+    user_value: String,
 }
 
 fn model(_app: &App) -> Model {
-    _app.main_window().set_title("AVL Tree");
+    let window = _app
+        .new_window()
+        .title("AVL Tree")
+        .view(view)
+        .key_pressed(key_pressed)
+        .build()
+        .unwrap();
 
     Model {
-        user_value: String::new(),
+        _window: window,
         tree: Tree::new(),
+        user_value: String::new(),
     }
 }
 
-fn update(_app: &App, _model: &mut Model, _update: Update) {
-    match _app.keys.down.iter().next() {
-        Some(Key::Return) => {
-            if let Ok(value) = _model.user_value.parse::<i32>() {
-                _model.tree.insert(value);
-            }
-            _model.user_value.clear();
-        }
-        Some(Key::Back) => {
-            _model.user_value.pop();
-        }
-        Some(Key::Key0) => {
-            _model.user_value.push('0');
-        }
-        Some(Key::Key1) => {
-            _model.user_value.push('1');
-        }
-        Some(Key::Key2) => {
-            _model.user_value.push('2');
-        }
-        Some(Key::Key3) => {
-            _model.user_value.push('3');
-        }
-        Some(Key::Key4) => {
-            _model.user_value.push('4');
-        }
-        Some(Key::Key5) => {
-            _model.user_value.push('5');
-        }
-        Some(Key::Key6) => {
-            _model.user_value.push('6');
-        }
-        Some(Key::Key7) => {
-            _model.user_value.push('7');
-        }
-        Some(Key::Key8) => {
-            _model.user_value.push('8');
-        }
-        Some(Key::Key9) => {
-            _model.user_value.push('9');
-        }
-
-        _ => {}
-    }
-}
+fn update(_app: &App, _model: &mut Model, _update: Update) {}
 
 fn view(_app: &App, _model: &Model, frame: Frame) {
     frame.clear(WHITE);
@@ -156,5 +123,50 @@ fn calculate_spacing<T: Ord + std::fmt::Display>(root: &Option<Box<Node<T>>>) ->
         }
 
         None => 0.0,
+    }
+}
+
+fn key_pressed(_app: &App, model: &mut Model, key: Key) {
+    match key {
+        Key::Key0 => {
+            model.user_value.push('0');
+        }
+        Key::Key1 => {
+            model.user_value.push('1');
+        }
+        Key::Key2 => {
+            model.user_value.push('2');
+        }
+        Key::Key3 => {
+            model.user_value.push('3');
+        }
+        Key::Key4 => {
+            model.user_value.push('4');
+        }
+        Key::Key5 => {
+            model.user_value.push('5');
+        }
+        Key::Key6 => {
+            model.user_value.push('6');
+        }
+        Key::Key7 => {
+            model.user_value.push('7');
+        }
+        Key::Key8 => {
+            model.user_value.push('8');
+        }
+        Key::Key9 => {
+            model.user_value.push('9');
+        }
+        Key::Back => {
+            model.user_value.pop();
+        }
+        Key::Return => {
+            if let Ok(value) = model.user_value.parse::<i32>() {
+                model.tree.insert(value);
+            }
+            model.user_value.clear();
+        }
+        _other_key => {}
     }
 }
