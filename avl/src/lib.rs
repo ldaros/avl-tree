@@ -1,3 +1,6 @@
+// Luan Daros & Luiz Ricardo Brugnera
+// Based on Narasimha Karumanchi, Data Structures and Algorithms Made Easy: Data Structures and
+// Algorithmic Puzzles.
 use core::fmt;
 use std::cmp::{max, Ordering};
 
@@ -132,7 +135,7 @@ mod tests {
         tree.insert(3);
         tree.insert(4);
 
-        assert_eq!(tree.to_string(), "2(1(()())3(()4(()())))");
+        assert_eq!(tree.to_string(), "2<1<<><>>3<<>4<<><>>>>");
     }
 }
 
@@ -397,12 +400,12 @@ impl<T: Ord> Node<T> {
 fn tree_to_string_recursive<T: Ord + Clone + fmt::Display>(node: &Option<Box<Node<T>>>) -> String {
     if let Some(ref n) = *node {
         format!(
-            "{}({}{})",
+            "{}<{}{}>",
             n.key,
             tree_to_string_recursive(&n.left),
             tree_to_string_recursive(&n.right)
         )
     } else {
-        String::from("()")
+        String::from("<>")
     }
 }
